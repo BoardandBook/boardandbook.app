@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "QMDSS5726N.com.ripkrehbiel.BoardAndBook",
+        "paths": [
+          "/play",
+          "/play/*"
+        ]
+      }
+    ]
+  }
+}

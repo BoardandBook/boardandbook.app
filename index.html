@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Board & Book · Chess you can read</title>
+  <meta name="description" content="Play real games, walk through chess history move by move, and train on puzzles from famous players. Free on iPhone.">
+  <meta name="theme-color" content="#1E1915">
+  <meta property="og:title" content="Board & Book">
+  <meta property="og:description" content="Play. Learn from real games. Train on positions that actually happened.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://boardandbook.app">
+  <meta property="og:image" content="https://boardandbook.app/assets/og-image.png?v=20260728b">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Board & Book">
+  <meta name="twitter:description" content="Play. Learn from real games. Train on positions that actually happened.">
+  <meta name="twitter:image" content="https://boardandbook.app/assets/og-image.png?v=20260728b">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="canonical" href="https://boardandbook.app">
+  <link rel="icon" href="/assets/app-icon.png?v=20260728b" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/app-icon.png?v=20260728b">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wall-dark: #1E1915;
+      --wall-mid: #252019;
+      --wall-light: #2E2720;
+      --leather: #213026;
+      --leather-light: #2B4034;
+      --leather-highlight: #385242;
+      --velvet: #1A213F;
+      --velvet-light: #263357;
+      --brass: #C7A858;
+      --brass-light: #D9BC72;
+      --brass-dark: #9E8440;
+      --brass-glow: rgba(199, 168, 88, 0.18);
+      --cream: #F2EBDD;
+      --cream-dim: #B8AE9E;
+      --text-muted: #7A7268;
+      --border-subtle: rgba(199, 168, 88, 0.12);
+      --border-accent: rgba(199, 168, 88, 0.28);
+      --shadow-deep: rgba(0, 0, 0, 0.45);
+      --shadow-plate: 0 18px 50px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background: var(--wall-dark);
+      color: var(--cream);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 120% 80% at 50% 0%, rgba(46, 39, 32, 0.9) 0%, transparent 55%),
+        radial-gradient(ellipse 90% 60% at 50% 100%, rgba(26, 33, 63, 0.25) 0%, transparent 50%),
+        linear-gradient(180deg, var(--wall-mid) 0%, var(--wall-dark) 45%, #171310 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 128px 128px;
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--brass);
+      font-weight: 500;
+    }
+
+    .divider {
+      width: 64px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--brass), transparent);
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: linear-gradient(135deg, var(--brass-dark) 0%, var(--brass) 55%, var(--brass-light) 100%);
+      color: var(--wall-dark);
+      -webkit-text-fill-color: var(--wall-dark);
+      font-family: 'Jost', sans-serif;
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.95rem 2rem;
+      border-radius: 999px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 28px rgba(199, 168, 88, 0.22);
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 36px rgba(199, 168, 88, 0.32);
+    }
+
+    .cta svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+    }
+
+    .cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--cream-dim);
+      text-decoration: none;
+      font-size: 0.88rem;
+      letter-spacing: 0.04em;
+      transition: color 0.3s ease;
+    }
+
+    .cta-secondary:hover { color: var(--brass-light); }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(14px);
+      background: rgba(30, 25, 21, 0.72);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--cream);
+    }
+
+    .brand img {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    .brand span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    .nav-links a {
+      color: var(--cream-dim);
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--brass); }
+
+    .nav-links a.cta,
+    .nav-links a.cta:hover {
+      color: var(--wall-dark);
+      -webkit-text-fill-color: var(--wall-dark);
+    }
+
+    .nav-cta {
+      padding: 0.65rem 1.2rem;
+      font-size: 0.72rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 4.5rem 0 3rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-copy h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: clamp(2.6rem, 5vw, 4rem);
+      line-height: 1.08;
+      margin: 1rem 0 1.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-copy h1 em {
+      font-style: italic;
+      color: var(--brass-light);
+      font-weight: 500;
+    }
+
+    .hero-lead {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.02rem;
+      color: var(--cream-dim);
+      max-width: 34rem;
+      margin-bottom: 2rem;
+      line-height: 1.85;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-pills {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-accent);
+      background: rgba(33, 48, 38, 0.55);
+      color: var(--brass-light);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .phone-stage {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      min-height: 560px;
+    }
+
+    .phone-glow {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, var(--brass-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .phone {
+      position: relative;
+      width: min(290px, 78vw);
+      padding: 10px;
+      border-radius: 38px;
+      background: linear-gradient(160deg, #3A342E 0%, #1A1612 100%);
+      box-shadow:
+        0 30px 80px var(--shadow-deep),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .phone::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 88px;
+      height: 24px;
+      border-radius: 999px;
+      background: #0E0C0A;
+      z-index: 3;
+    }
+
+    .phone img {
+      display: block;
+      width: 100%;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Full simulator captures already include the device frame */
+    .device-shot {
+      display: block;
+      width: min(300px, 78vw);
+      border-radius: 34px;
+      box-shadow:
+        0 30px 80px var(--shadow-deep),
+        0 0 0 1px rgba(255, 255, 255, 0.06);
+    }
+
+    .device-shot-back {
+      position: absolute;
+      right: 4%;
+      top: 10%;
+      width: min(240px, 62vw);
+      opacity: 0.55;
+      transform: rotate(7deg) scale(0.92);
+      z-index: 0;
+    }
+
+    .device-shot-front {
+      position: relative;
+      z-index: 2;
+    }
+
+    .phone-back {
+      position: absolute;
+      right: 8%;
+      top: 12%;
+      width: min(220px, 58vw);
+      opacity: 0.55;
+      transform: rotate(8deg) scale(0.92);
+      filter: blur(0.2px);
+      z-index: 0;
+    }
+
+    .phone-front {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ── Gallery strip ── */
+    .gallery {
+      padding: 2rem 0 5rem;
+    }
+
+    .gallery-head {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .gallery-head h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 500;
+      margin-top: 0.75rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .gallery-item {
+      text-align: center;
+    }
+
+    .gallery-frame {
+      margin-bottom: 0.75rem;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-frame:hover {
+      transform: translateY(-4px);
+    }
+
+    .gallery-frame img {
+      display: block;
+      width: 100%;
+      border-radius: 22px;
+      box-shadow: var(--shadow-plate);
+    }
+
+    .gallery-item span {
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ── Room sections ── */
+    .room {
+      padding: 5rem 0;
+    }
+
+    .room-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .room-grid.reverse .room-copy { order: 2; }
+    .room-grid.reverse .room-visual { order: 1; }
+
+    .room-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--brass);
+      opacity: 0.25;
+      margin-bottom: 0.5rem;
+    }
+
+    .room-copy h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .room-label {
+      color: var(--brass);
+      font-size: 0.72rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .room-copy p {
+      font-family: 'Libre Baskerville', serif;
+      color: var(--cream-dim);
+      font-size: 0.95rem;
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+
+    .room-list {
+      list-style: none;
+      margin-top: 1.25rem;
+    }
+
+    .room-list li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: 0.55rem;
+      color: var(--cream-dim);
+      font-size: 0.88rem;
+    }
+
+    .room-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--brass);
+    }
+
+    .room-visual {
+      display: flex;
+      justify-content: center;
+    }
+
+    .room-phone {
+      width: min(300px, 72vw);
+    }
+
+    /* ── Plate cards ── */
+    .highlights {
+      padding: 1rem 0 5rem;
+    }
+
+    .plate-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .plate {
+      position: relative;
+      padding: 2rem 1.75rem;
+      border-radius: 18px;
+      background:
+        linear-gradient(165deg, rgba(43, 64, 52, 0.95) 0%, rgba(33, 48, 38, 0.98) 40%, rgba(26, 33, 63, 0.35) 100%);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-plate);
+      overflow: hidden;
+    }
+
+    .plate::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--brass), transparent);
+      opacity: 0.7;
+    }
+
+    .plate h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      font-weight: 600;
+      margin-bottom: 0.65rem;
+    }
+
+    .plate p {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.86rem;
+      color: var(--cream-dim);
+      line-height: 1.75;
+    }
+
+    /* ── Quote ── */
+    .quote-section {
+      padding: 3rem 0 5rem;
+    }
+
+    .quote-plate {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      background: rgba(26, 33, 63, 0.35);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-plate);
+    }
+
+    .quote-plate blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--cream);
+      margin-bottom: 1.25rem;
+    }
+
+    .quote-plate cite {
+      font-style: normal;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ── Final CTA ── */
+    .final-cta {
+      padding: 2rem 0 6rem;
+      text-align: center;
+    }
+
+    .final-cta h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    .final-cta p {
+      font-family: 'Libre Baskerville', serif;
+      color: var(--cream-dim);
+      margin-bottom: 2rem;
+    }
+
+    .store-note {
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 2.5rem 0;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover { color: var(--brass); }
+
+    .footer-copy {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    /* ── Animations ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .device-shot-front { animation: float 5s ease-in-out infinite; }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .hero-grid,
+      .room-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .room-grid.reverse .room-copy,
+      .room-grid.reverse .room-visual { order: unset; }
+
+      .hero-copy { text-align: center; }
+      .hero-lead { margin-left: auto; margin-right: auto; }
+      .hero-actions { justify-content: center; }
+      .hero-pills { justify-content: center; }
+      .phone-back { display: none; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .plate-grid { grid-template-columns: 1fr; }
+      .nav-links a:not(.nav-cta) { display: none; }
+    }
+
+    @media (max-width: 520px) {
+      .hero { padding-top: 2.5rem; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+      .cta { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="/">
+        <img src="/assets/app-icon.png?v=20260728b" alt="" width="36" height="36">
+        <span>Board & Book</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#play">Play</a>
+        <a href="#learn">Learn</a>
+        <a href="#train">Train</a>
+        <a href="https://apps.apple.com/search?term=Board%20%26%20Book" class="cta nav-cta">Get the app</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <div class="eyebrow">Chess for people who love the game</div>
+        <h1>Read the story.<br>See the <em>board move</em>.</h1>
+        <p class="hero-lead">
+          Board & Book is where you play serious chess, walk through famous games line by line,
+          and solve puzzles pulled from real history. No filler positions. No noise.
+        </p>
+        <div class="hero-actions">
+          <a href="https://apps.apple.com/search?term=Board%20%26%20Book" class="cta" aria-label="Download on the App Store">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Download free
+          </a>
+          <a href="#rooms" class="cta-secondary">See what's inside ↓</a>
+        </div>
+        <div class="hero-pills">
+          <span class="pill">Play</span>
+          <span class="pill">Learn</span>
+          <span class="pill">Train</span>
+        </div>
+      </div>
+
+      <div class="phone-stage reveal">
+        <div class="phone-glow" aria-hidden="true"></div>
+        <img class="device-shot device-shot-back" src="/assets/screens/play.png?v=20260728b" alt="" aria-hidden="true">
+        <img class="device-shot device-shot-front" src="/assets/screens/home.png?v=20260728b" alt="Board & Book home screen showing The Board, The Book, and Tactics">
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery" id="rooms">
+    <div class="container">
+      <div class="gallery-head reveal">
+        <div class="eyebrow">Inside the app</div>
+        <h2>Three rooms. One table.</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item reveal">
+          <div class="gallery-frame">
+            <img src="/assets/screens/home.png?v=20260728b" alt="Home screen with The Board, The Book, and Tactics">
+          </div>
+          <span>Home</span>
+        </div>
+        <div class="gallery-item reveal">
+          <div class="gallery-frame">
+            <img src="/assets/screens/play.png?v=20260728b" alt="Chess board with move list during a game">
+          </div>
+          <span>Play</span>
+        </div>
+        <div class="gallery-item reveal">
+          <div class="gallery-frame">
+            <img src="/assets/screens/learn.png?v=20260728b" alt="Board and notation while studying a game">
+          </div>
+          <span>Learn</span>
+        </div>
+        <div class="gallery-item reveal">
+          <div class="gallery-frame">
+            <img src="/assets/screens/train.png?v=20260728b" alt="Tactics themes with progress tracking">
+          </div>
+          <span>Train</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="room" id="play">
+    <div class="container room-grid">
+      <div class="room-copy reveal">
+        <div class="room-number">I</div>
+        <div class="room-label">The Board</div>
+        <h2>Sit down and play.</h2>
+        <p>
+          Challenge the Arasan engine, a friend in the same room, or someone online.
+          Pick bullet, blitz, rapid, or take your time with no clock at all.
+        </p>
+        <p>
+          When the game ends, review it move by move. See where you went wrong.
+          See where you got lucky.
+        </p>
+        <ul class="room-list">
+          <li>Engine, local, and online modes</li>
+          <li>Full post-game analysis</li>
+          <li>Clean board you can actually read</li>
+        </ul>
+      </div>
+      <div class="room-visual reveal">
+        <img class="device-shot room-phone" src="/assets/screens/play.png?v=20260728b" alt="Playing a game on The Board">
+      </div>
+    </div>
+  </section>
+
+  <section class="room" id="learn">
+    <div class="container room-grid reverse">
+      <div class="room-copy reveal">
+        <div class="room-number">II</div>
+        <div class="room-label">The Book</div>
+        <h2>History you can replay.</h2>
+        <p>
+          Open a chapter on Morphy, Capablanca, or Fischer. Read the commentary.
+          Tap through the moves and watch the position change on the board beside you.
+        </p>
+        <p>
+          This is how chess was meant to be studied: with the pieces in front of you
+          and the story in your hands.
+        </p>
+        <ul class="room-list">
+          <li>Games tied to real players and eras</li>
+          <li>Board follows the text as you read</li>
+          <li>Search books, chapters, and players</li>
+        </ul>
+      </div>
+      <div class="room-visual reveal">
+        <img class="device-shot room-phone" src="/assets/screens/learn.png?v=20260728b" alt="Studying a game with live board notation">
+      </div>
+    </div>
+  </section>
+
+  <section class="room" id="train">
+    <div class="container room-grid">
+      <div class="room-copy reveal">
+        <div class="room-number">III</div>
+        <div class="room-label">Tactics</div>
+        <h2>Sharpen your eye.</h2>
+        <p>
+          Three hundred puzzles across ten themes: forks, pins, back rank mates,
+          discovered attacks, and more. Every one comes from a real game.
+        </p>
+        <p>
+          Pick up where you left off in any theme. Try the daily puzzle each morning.
+          That one stays free.
+        </p>
+        <ul class="room-list">
+          <li>300+ puzzles in themed sets</li>
+          <li>Progress saved per theme</li>
+          <li>Free daily puzzle</li>
+        </ul>
+      </div>
+      <div class="room-visual reveal">
+        <img class="device-shot room-phone" src="/assets/screens/train.png?v=20260728b" alt="Tactics training themes with puzzle counts">
+      </div>
+    </div>
+  </section>
+
+  <section class="highlights">
+    <div class="container plate-grid">
+      <article class="plate reveal">
+        <h3>Real games only</h3>
+        <p>Every position you study was played by someone who knew what they were doing. No computer-generated filler.</p>
+      </article>
+      <article class="plate reveal">
+        <h3>Built for reading</h3>
+        <p>Leather plates, brass accents, and type you can stare at for an hour. Chess should feel like opening a good book.</p>
+      </article>
+      <article class="plate reveal">
+        <h3>Works offline</h3>
+        <p>Books, puzzles, and engine games load without a connection. Online play needs the internet. Everything else is yours.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="quote-section">
+    <div class="container">
+      <div class="quote-plate reveal">
+        <blockquote>Help your pieces so they can help you.</blockquote>
+        <cite>Paul Morphy</cite>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="container reveal">
+      <div class="divider" style="margin: 0 auto;"></div>
+      <h2>Your next game is waiting.</h2>
+      <p>Free on iPhone. Open the app, pick a room, and play.</p>
+      <a href="https://apps.apple.com/search?term=Board%20%26%20Book" class="cta" aria-label="Download on the App Store">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Get Board & Book
+      </a>
+      <p class="store-note">Available on the App Store</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <nav class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="mailto:hello@boardandbook.app">Contact</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 Board & Book</p>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
