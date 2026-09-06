@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-itunes-app" content="app-id=6760626518">
+  <title>You've been invited to play · Board &amp; Book</title>
+  <meta name="description" content="Someone invited you to a game of chess on Board &amp; Book. Get the free app to join.">
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#1E1915">
+  <meta property="og:title" content="You've been invited to a game">
+  <meta property="og:description" content="Join the game on Board &amp; Book — free chess on iPhone.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://boardandbook.app/play">
+  <meta property="og:image" content="https://boardandbook.app/assets/og-image.png?v=20260728b">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="You've been invited to a game">
+  <meta name="twitter:description" content="Join the game on Board &amp; Book — free chess on iPhone.">
+  <meta name="twitter:image" content="https://boardandbook.app/assets/og-image.png?v=20260728b">
+  <link rel="canonical" href="https://boardandbook.app/play">
+  <link rel="icon" href="/assets/app-icon.png?v=20260728b" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/app-icon.png?v=20260728b">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wall-dark: #1E1915;
+      --wall-mid: #252019;
+      --wall-light: #2E2720;
+      --brass: #C7A858;
+      --brass-light: #D9BC72;
+      --brass-dark: #9E8440;
+      --cream: #F2EBDD;
+      --cream-dim: #B8AE9E;
+      --text-muted: #7A7268;
+      --border-subtle: rgba(199, 168, 88, 0.12);
+      --border-accent: rgba(199, 168, 88, 0.28);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    body {
+      background: var(--wall-dark);
+      color: var(--cream);
+      font-family: 'Libre Baskerville', Georgia, serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      background-image:
+        radial-gradient(ellipse at 50% 0%, rgba(199, 168, 88, 0.07) 0%, transparent 60%),
+        linear-gradient(180deg, var(--wall-mid) 0%, var(--wall-dark) 55%);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--cream);
+      margin-bottom: 2.75rem;
+    }
+
+    .brand img {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    .brand span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .eyebrow {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--brass);
+      font-weight: 500;
+      margin-bottom: 1.1rem;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 7vw, 3rem);
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 1.1rem;
+    }
+
+    h1 em { font-style: italic; color: var(--brass-light); }
+
+    .lead {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--cream-dim);
+      max-width: 32rem;
+      margin: 0 auto 2.25rem;
+    }
+
+    .room {
+      display: none;
+      margin: 0 auto 2.25rem;
+      padding: 1.4rem 1.75rem;
+      border: 1px solid var(--border-accent);
+      border-radius: 14px;
+      background: rgba(46, 39, 32, 0.55);
+      max-width: 22rem;
+    }
+
+    .room.is-shown { display: block; }
+
+    .room-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .room-code {
+      font-family: 'Jost', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 500;
+      letter-spacing: 0.32em;
+      color: var(--brass-light);
+      text-indent: 0.32em;
+      word-break: break-all;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      background: linear-gradient(135deg, var(--brass-dark) 0%, var(--brass) 55%, var(--brass-light) 100%);
+      color: var(--wall-dark);
+      -webkit-text-fill-color: var(--wall-dark);
+      font-family: 'Jost', sans-serif;
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.95rem 2rem;
+      border-radius: 999px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 28px rgba(199, 168, 88, 0.22);
+    }
+
+    .cta:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(199, 168, 88, 0.32); }
+    .cta svg { width: 17px; height: 17px; fill: currentColor; }
+
+    .steps {
+      list-style: none;
+      counter-reset: step;
+      max-width: 26rem;
+      margin: 2.5rem auto 0;
+      text-align: left;
+    }
+
+    .steps li {
+      counter-increment: step;
+      position: relative;
+      padding-left: 2.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--cream-dim);
+    }
+
+    .steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: -0.1rem;
+      width: 1.7rem;
+      height: 1.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-accent);
+      border-radius: 50%;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      color: var(--brass);
+    }
+
+    .store-note {
+      margin-top: 1.1rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    .back {
+      margin-top: 3rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.85rem;
+      color: var(--cream-dim);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.3s ease;
+    }
+
+    .back:hover { color: var(--brass-light); }
+
+    @media (max-width: 480px) {
+      .cta { width: 100%; }
+      .room-code { font-size: 1.5rem; letter-spacing: 0.24em; text-indent: 0.24em; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="brand" href="/">
+    <img src="/assets/app-icon.png?v=20260728b" alt="" width="40" height="40">
+    <span>Board &amp; Book</span>
+  </a>
+
+  <p class="eyebrow">A game is waiting</p>
+  <h1>You've been invited<br>to <em>play chess</em>.</h1>
+
+  <p class="lead">
+    This invite opens in the Board &amp; Book app. It looks like you don't have it yet —
+    it's free, and it takes about a minute.
+  </p>
+
+  <div class="room" id="room">
+    <p class="room-label">Room code</p>
+    <p class="room-code" id="roomCode"></p>
+  </div>
+
+  <a href="https://apps.apple.com/app/id6760626518" class="cta" aria-label="Download Board and Book on the App Store">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+    Get the free app
+  </a>
+  <p class="store-note">Free on iPhone · App Store</p>
+
+  <ol class="steps">
+    <li>Install Board &amp; Book from the App Store.</li>
+    <li>Come back here and tap this same invite link again — it will open straight into the game.</li>
+    <li>Create a free account when the app asks, and you're in.</li>
+  </ol>
+
+  <a class="back" href="/">← See what Board &amp; Book is</a>
+
+  <script>
+    (function () {
+      var code = new URLSearchParams(window.location.search).get('room');
+      if (!code) return;
+      // Room codes are short alphanumeric strings; anything else is not ours to display.
+      if (!/^[A-Za-z0-9-]{1,16}$/.test(code)) return;
+      document.getElementById('roomCode').textContent = code.toUpperCase();
+      document.getElementById('room').classList.add('is-shown');
+    })();
+  </script>
+
+</body>
+</html>
