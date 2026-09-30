@@ -4,32 +4,190 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-itunes-app" content="app-id=6760626518">
-<title>Page Not Found — Board & Book</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1E1915">
+<!--
+  GitHub Pages answers every path with no file of its own with this page,
+  including correspondence invite links (/c/<CODE>). Link previews in
+  Messages and WhatsApp read these static tags and never run the script
+  below, so they are written to suit an invite and a stray link alike:
+  never "Page not found".
+-->
+<title>Board &amp; Book</title>
+<meta name="description" content="Classical chess, curated. Free on iPhone.">
+<meta property="og:title" content="Board &amp; Book">
+<meta property="og:description" content="Classical chess, curated. Free on iPhone.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://boardandbook.app/assets/og-image.png?v=20260728b">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Board &amp; Book">
+<meta name="twitter:description" content="Classical chess, curated. Free on iPhone.">
+<meta name="twitter:image" content="https://boardandbook.app/assets/og-image.png?v=20260728b">
+<link rel="icon" href="/assets/app-icon.png?v=20260728b" type="image/png">
+<link rel="apple-touch-icon" href="/assets/app-icon.png?v=20260728b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --wall-dark: #1E1915;
+    --wall-mid: #252019;
+    --brass: #C7A858;
+    --brass-light: #D9BC72;
+    --brass-dark: #9E8440;
+    --cream: #F2EBDD;
+    --cream-dim: #B8AE9E;
+    --text-muted: #7A7268;
+    --border-accent: rgba(199, 168, 88, 0.28);
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
   body {
-    font-family: Georgia, 'Times New Roman', serif;
-    background: #1C1814;
-    color: #B5AFA6;
+    background: var(--wall-dark);
+    color: var(--cream);
+    font-family: 'Libre Baskerville', Georgia, serif;
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 40px 24px;
+    padding: 3rem 1.5rem;
     text-align: center;
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(199, 168, 88, 0.07) 0%, transparent 60%),
+      linear-gradient(180deg, var(--wall-mid) 0%, var(--wall-dark) 55%);
   }
-  h1 { font-size: 24px; color: #F0EBE0; margin-bottom: 12px; }
-  p { font-size: 15px; margin-bottom: 24px; }
-  a { color: #D1B36B; text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  .brand {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    text-decoration: none; color: var(--cream); margin-bottom: 2.75rem;
+  }
+  .brand img { width: 40px; height: 40px; border-radius: 10px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35); }
+  .brand span { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; }
+  .eyebrow {
+    font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--brass); font-weight: 500; margin-bottom: 1.1rem;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 7vw, 3rem);
+    font-weight: 600; line-height: 1.15; margin-bottom: 1.1rem;
+  }
+  h1 em { font-style: italic; color: var(--brass-light); }
+  .lead { font-size: 1rem; line-height: 1.75; color: var(--cream-dim); max-width: 32rem; margin: 0 auto 2.25rem; }
+  .code-card {
+    margin: 0 auto 2.25rem; padding: 1.4rem 1.75rem;
+    border: 1px solid var(--border-accent); border-radius: 14px;
+    background: rgba(46, 39, 32, 0.55); max-width: 22rem;
+  }
+  .code-label {
+    font-family: 'Jost', sans-serif; font-size: 0.68rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem;
+  }
+  .code {
+    font-family: 'Jost', sans-serif; font-size: 1.9rem; font-weight: 500;
+    letter-spacing: 0.24em; text-indent: 0.24em; color: var(--brass-light);
+  }
+  .copy {
+    margin-top: 0.9rem; background: none; border: 1px solid var(--border-accent);
+    color: var(--cream-dim); font-family: 'Jost', sans-serif; font-size: 0.78rem;
+    letter-spacing: 0.08em; padding: 0.6rem 1.2rem; min-height: 44px; border-radius: 999px; cursor: pointer;
+  }
+  .copy:hover { color: var(--brass-light); border-color: var(--brass); }
+  .cta {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.65rem;
+    background: linear-gradient(135deg, var(--brass-dark) 0%, var(--brass) 55%, var(--brass-light) 100%);
+    color: var(--wall-dark); -webkit-text-fill-color: var(--wall-dark);
+    font-family: 'Jost', sans-serif; font-weight: 600; font-size: 0.82rem;
+    letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+    padding: 0.95rem 2rem; border-radius: 999px; box-shadow: 0 8px 28px rgba(199, 168, 88, 0.22);
+  }
+  .store-note { margin-top: 1.1rem; font-family: 'Jost', sans-serif; font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.06em; }
+  .steps { list-style: none; counter-reset: step; max-width: 26rem; margin: 2.5rem auto 0; text-align: left; }
+  .steps li {
+    counter-increment: step; position: relative; padding-left: 2.5rem; margin-bottom: 1rem;
+    font-size: 0.9rem; line-height: 1.6; color: var(--cream-dim);
+  }
+  .steps li::before {
+    content: counter(step); position: absolute; left: 0; top: 0.05rem;
+    width: 1.6rem; height: 1.6rem; border: 1px solid var(--border-accent); border-radius: 50%;
+    font-family: 'Jost', sans-serif; font-size: 0.75rem; color: var(--brass);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .back { margin-top: 3rem; font-family: 'Jost', sans-serif; font-size: 0.85rem; color: var(--cream-dim); text-decoration: none; letter-spacing: 0.04em; }
+  .back:hover { color: var(--brass-light); }
+  a.inline { color: var(--brass-light); text-decoration: none; }
+  [hidden] { display: none !important; }
+  @media (max-width: 480px) {
+    .cta { width: 100%; }
+    .code { font-size: 1.5rem; letter-spacing: 0.18em; text-indent: 0.18em; }
+  }
 </style>
 </head>
 <body>
-<div>
-  <h1>Page not found</h1>
-  <p>The page you&rsquo;re looking for doesn&rsquo;t exist.</p>
-  <a href="/">&larr; Back to Board &amp; Book</a>
-  <p style="margin-top:18px;font-size:14px;">or <a href="https://apps.apple.com/app/id6760626518">get the free app</a></p>
-</div>
+  <a class="brand" href="/">
+    <img src="/assets/app-icon.png?v=20260728b" alt="" width="40" height="40">
+    <span>Board &amp; Book</span>
+  </a>
+
+  <!-- A correspondence invite: /c/<CODE>. Shown only for a well-formed code. -->
+  <main id="invite" hidden>
+    <p class="eyebrow">A game by post</p>
+    <h1>You&rsquo;ve been invited<br>to <em>a game of chess</em>.</h1>
+    <p class="lead">
+      A move a day, at your own pace. Open Board &amp; Book and enter this code.
+    </p>
+    <div class="code-card">
+      <p class="code-label">Invite code</p>
+      <p class="code" id="inviteCode"></p>
+      <button class="copy" id="copyCode" type="button">Copy code</button>
+    </div>
+    <a href="https://apps.apple.com/app/id6760626518" class="cta" aria-label="Get Board and Book free on the App Store">Get the free app</a>
+    <p class="store-note">Free on iPhone &middot; App Store</p>
+    <ol class="steps">
+      <li>Install Board &amp; Book from the App Store.</li>
+      <li>Tap this invite link again, or open the app and enter the code.</li>
+      <li>Make your first move whenever it suits you.</li>
+    </ol>
+    <a class="back" href="/">&larr; See what Board &amp; Book is</a>
+  </main>
+
+  <!-- Every other path with no page of its own. -->
+  <main id="notFound">
+    <h1>Page not found</h1>
+    <p class="lead">The page you&rsquo;re looking for doesn&rsquo;t exist.</p>
+    <a class="back" href="/" style="margin-top:0">&larr; Back to Board &amp; Book</a>
+    <p class="store-note" style="margin-top:1.4rem">or <a class="inline" href="https://apps.apple.com/app/id6760626518">get the free app</a></p>
+  </main>
+
+  <script>
+    (function () {
+      // Invite codes are 8 characters from this alphabet (no 0/O, 1/I/L, U).
+      // Accept /c/<CODE> and, for the alternative link form, ?code=<CODE>;
+      // tolerate lower case, one hyphen and a trailing slash. The page knows
+      // only the code: no API call, no inviter's name.
+      var ALPHABET = /^[ABCDEFGHJKMNPQRSTVWXYZ23456789]{8}$/;
+      var raw = null;
+      var match = window.location.pathname.match(/^\/c\/([^\/]+)\/?$/);
+      if (match) raw = decodeURIComponent(match[1]);
+      if (!raw) raw = new URLSearchParams(window.location.search).get('code');
+      if (!raw) return;
+      var code = raw.replace('-', '').toUpperCase();
+      if (!ALPHABET.test(code)) return;
+
+      var shown = code.slice(0, 4) + '-' + code.slice(4);
+      document.getElementById('inviteCode').textContent = shown;
+      document.getElementById('notFound').hidden = true;
+      document.getElementById('invite').hidden = false;
+      document.title = 'You’ve been invited to play · Board & Book';
+
+      var button = document.getElementById('copyCode');
+      button.addEventListener('click', function () {
+        if (!navigator.clipboard) return;
+        navigator.clipboard.writeText(shown).then(function () {
+          button.textContent = 'Copied';
+          setTimeout(function () { button.textContent = 'Copy code'; }, 2000);
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
