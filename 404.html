@@ -128,12 +128,12 @@
     <span>Board &amp; Book</span>
   </a>
 
-  <!-- A correspondence invite: /c/<CODE>. Shown only for a well-formed code. -->
+  <!-- A Long Game invite: /c/<CODE>. Shown only for a well-formed code. -->
   <main id="invite" hidden>
-    <p class="eyebrow">A game by post</p>
-    <h1>You&rsquo;ve been invited<br>to <em>a game of chess</em>.</h1>
+    <p class="eyebrow">The Long Game</p>
+    <h1>You&rsquo;ve been invited<br>to <em>a long game of chess</em>.</h1>
     <p class="lead">
-      A move a day, at your own pace. Open Board &amp; Book and enter this code.
+      Played over days, a move at your own pace. Open Board &amp; Book and enter this code.
     </p>
     <div class="code-card">
       <p class="code-label">Invite code</p>
@@ -177,7 +177,7 @@
       document.getElementById('inviteCode').textContent = shown;
       document.getElementById('notFound').hidden = true;
       document.getElementById('invite').hidden = false;
-      document.title = 'You’ve been invited to play · Board & Book';
+      document.title = 'You’ve been invited to a long game · Board & Book';
 
       var button = document.getElementById('copyCode');
       button.addEventListener('click', function () {
