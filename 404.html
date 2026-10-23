@@ -130,24 +130,24 @@
 
   <!-- A Long Game invite: /c/<CODE>. Shown only for a well-formed code. -->
   <main id="invite" hidden>
-    <p class="eyebrow">The Long Game</p>
-    <h1>You&rsquo;ve been invited<br>to <em>a long game of chess</em>.</h1>
-    <p class="lead">
+    <p class="eyebrow" data-i18n="eyebrow">The Long Game</p>
+    <h1 data-i18n-html="title">You&rsquo;ve been invited<br>to <em>a long game of chess</em>.</h1>
+    <p class="lead" data-i18n="lead">
       Played over days, a move at your own pace. Open Board &amp; Book and enter this code.
     </p>
     <div class="code-card">
-      <p class="code-label">Invite code</p>
+      <p class="code-label" data-i18n="codeLabel">Invite code</p>
       <p class="code" id="inviteCode"></p>
-      <button class="copy" id="copyCode" type="button">Copy code</button>
+      <button class="copy" id="copyCode" type="button" data-i18n="copy">Copy code</button>
     </div>
-    <a href="https://apps.apple.com/app/id6760626518" class="cta" aria-label="Get Board and Book free on the App Store">Get the free app</a>
-    <p class="store-note">Free on iPhone &middot; App Store</p>
+    <a href="https://apps.apple.com/app/id6760626518" class="cta" aria-label="Get Board and Book free on the App Store" data-i18n="cta">Get the free app</a>
+    <p class="store-note" data-i18n="storeNote">Free on iPhone &middot; App Store</p>
     <ol class="steps">
-      <li>Install Board &amp; Book from the App Store.</li>
-      <li>Tap this invite link again, or open the app and enter the code.</li>
-      <li>Make your first move whenever it suits you.</li>
+      <li data-i18n="step1">Install Board &amp; Book from the App Store.</li>
+      <li data-i18n="step2">Tap this invite link again, or open the app and enter the code.</li>
+      <li data-i18n="step3">Make your first move whenever it suits you.</li>
     </ol>
-    <a class="back" href="/">&larr; See what Board &amp; Book is</a>
+    <a class="back" href="/" data-i18n="back">&larr; See what Board &amp; Book is</a>
   </main>
 
   <!-- Every other path with no page of its own. -->
@@ -177,14 +177,53 @@
       document.getElementById('inviteCode').textContent = shown;
       document.getElementById('notFound').hidden = true;
       document.getElementById('invite').hidden = false;
-      document.title = 'You’ve been invited to a long game · Board & Book';
+
+      // Italian for a friend whose phone is set to Italian, or for a link
+      // that asks for it (?lang=it). The words follow the app's Italian
+      // glossary (La Lunga Partita); "Board & Book" stays in English.
+      var IT = {
+        pageTitle: 'Un invito a una lunga partita · Board & Book',
+        eyebrow: 'La Lunga Partita',
+        title: 'Hai un invito<br>a <em>una lunga partita a scacchi</em>.',
+        lead: 'Si gioca nel giro di giorni, una mossa quando vuoi tu. Apri Board & Book e inserisci questo codice.',
+        codeLabel: 'Codice invito',
+        copy: 'Copia codice',
+        copied: 'Copiato',
+        cta: 'Scarica l’app gratuita',
+        ctaLabel: 'Scarica Board and Book gratis dall’App Store',
+        storeNote: 'Gratis su iPhone · App Store',
+        step1: 'Installa Board & Book dall’App Store.',
+        step2: 'Tocca di nuovo questo invito, oppure apri l’app e inserisci il codice.',
+        step3: 'Fai la tua prima mossa quando ti è comodo.',
+        back: '← Scopri Board & Book'
+      };
+      var EN = {
+        pageTitle: 'You’ve been invited to a long game · Board & Book',
+        copy: 'Copy code',
+        copied: 'Copied'
+      };
+      var asked = new URLSearchParams(window.location.search).get('lang');
+      var language = (asked || (navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
+      var words = EN;
+      if (language.indexOf('it') === 0) {
+        words = IT;
+        document.documentElement.lang = 'it';
+        document.querySelectorAll('#invite [data-i18n]').forEach(function (el) {
+          el.textContent = IT[el.getAttribute('data-i18n')];
+        });
+        document.querySelectorAll('#invite [data-i18n-html]').forEach(function (el) {
+          el.innerHTML = IT[el.getAttribute('data-i18n-html')];
+        });
+        document.querySelector('#invite .cta').setAttribute('aria-label', IT.ctaLabel);
+      }
+      document.title = words.pageTitle;
 
       var button = document.getElementById('copyCode');
       button.addEventListener('click', function () {
         if (!navigator.clipboard) return;
         navigator.clipboard.writeText(shown).then(function () {
-          button.textContent = 'Copied';
-          setTimeout(function () { button.textContent = 'Copy code'; }, 2000);
+          button.textContent = words.copied;
+          setTimeout(function () { button.textContent = words.copy; }, 2000);
         });
       });
     })();
